@@ -41,6 +41,9 @@ define Package/$(PKG_NAME)/install
 
 	$(INSTALL_DIR) $(1)/usr/share/luci-static/resources/view/status
 	$(INSTALL_DATA) ./root/usr/share/luci-static/resources/view/status/session_tracker.js $(1)/usr/share/luci-static/resources/view/status/session_tracker.js
+
+	$(INSTALL_DIR) $(1)/usr/share/luci/i18n
+	$(INSTALL_DATA) ./root/usr/share/luci/i18n/session-tracker.zh-cn.json $(1)/usr/share/luci/i18n/session-tracker.zh-cn.json
 endef
 
 $(eval $(call BuildPackage,$(PKG_NAME)))

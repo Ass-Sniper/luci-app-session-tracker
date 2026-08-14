@@ -2,6 +2,7 @@
 'require ui';
 'require rpc';
 'require view';
+'require poll';
 
 var callGetTerminals = rpc.declare({
 	object: 'session.tracker',
@@ -19,8 +20,6 @@ return view.extend({
 	},
 
 	render: function(data) {
-		var terminals = (data && data.terminals) ? data.terminals : [];
-
 		function formatDuration(seconds) {
 			if (!seconds || seconds <= 0) return '0s';
 			var d = Math.floor(seconds / 86400);
@@ -47,35 +46,60 @@ return view.extend({
 			])
 		]);
 
-		if (terminals.length === 0) {
-			table.appendChild(
-				E('tr', { 'class': 'tr placeholder' }, [
-					E('td', { 'class': 'td', 'colspan': '6' }, _('No active terminals found.'))
-				])
-			);
-		} else {
-			terminals.forEach(function(dev) {
-				var statusBadge;
-				if (dev.status === 'REACHABLE') {
-					statusBadge = E('span', { 'class': 'badge label success' }, _('Active'));
-				} else if (dev.status === 'STALE') {
-					statusBadge = E('span', { 'class': 'badge label warning' }, _('Stale (Grace)'));
-				} else {
-					statusBadge = E('span', { 'class': 'badge label' }, dev.status || 'Unknown');
-				}
+		// 抽离表格渲染逻辑，以便轮询时局部刷新
+		function renderTableRows(terminalsData) {
+			var terminals = (terminalsData && terminalsData.terminals) ? terminalsData.terminals : [];
 
+			// 清空现有数据行（保留表头）
+			while (table.rows.length > 1) {
+				table.deleteRow(1);
+			}
+
+			if (terminals.length === 0) {
 				table.appendChild(
-					E('tr', { 'class': 'tr' }, [
-						E('td', { 'class': 'td' }, dev.ip || '-'),
-						E('td', { 'class': 'td' }, E('code', {}, dev.mac || '-')),
-						E('td', { 'class': 'td' }, dev.hostname || '(Static IP)'),
-						E('td', { 'class': 'td' }, dev.dev || '-'),
-						E('td', { 'class': 'td' }, statusBadge),
-						E('td', { 'class': 'td' }, formatDuration(dev.session_time_sec))
+					E('tr', { 'class': 'tr placeholder' }, [
+						E('td', { 'class': 'td', 'colspan': '6' }, _('No active terminals found.'))
 					])
 				);
-			});
+			} else {
+				terminals.forEach(function(dev) {
+					var statusBadge;
+					if (dev.status === 'REACHABLE') {
+						statusBadge = E('span', { 'class': 'badge label success' }, _('Active'));
+					} else if (dev.status === 'STALE') {
+						statusBadge = E('span', { 'class': 'badge label warning' }, _('Stale (Grace)'));
+					} else {
+						statusBadge = E('span', { 'class': 'badge label' }, _(dev.status || 'Unknown'));
+					}
+
+					var hostnameText = dev.hostname;
+					if (!hostnameText || hostnameText === '(Static IP)') {
+						hostnameText = _('(Static IP)');
+					}
+
+					table.appendChild(
+						E('tr', { 'class': 'tr' }, [
+							E('td', { 'class': 'td' }, dev.ip || '-'),
+							E('td', { 'class': 'td' }, E('code', {}, dev.mac || '-')),
+							E('td', { 'class': 'td' }, hostnameText),
+							E('td', { 'class': 'td' }, dev.dev || '-'),
+							E('td', { 'class': 'td' }, statusBadge),
+							E('td', { 'class': 'td' }, formatDuration(dev.session_time_sec))
+						])
+					);
+				});
+			}
 		}
+
+		// 初始渲染一次表格
+		renderTableRows(data);
+
+		// 开启 5s 自动轮询刷新
+		poll.add(function() {
+			return callGetTerminals().then(function(newData) {
+				renderTableRows(newData);
+			});
+		}, 5);
 
 		return E('div', { 'class': 'cbi-map' }, [
 			E('h2', {}, _('Active Terminal Sessions')),
