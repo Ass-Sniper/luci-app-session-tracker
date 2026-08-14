@@ -42,6 +42,45 @@ src-git session_tracker [https://github.com/Ass-Sniper/luci-app-session-tracker.
 make menuconfig # 选中 luci-app-session-tracker 后编译
 ```
 
+## API & 命令行交互 (ubus)
+
+守护进程在后台运行后，会在系统的 `ubus` 总线上注册 `session.tracker` 服务。可以通过以下命令直接获取当前的在线终端与会话时长：
+
+```bash
+ubus call session.tracker get_terminals
+
+```
+
+**返回示例：**
+
+```json
+{
+	"terminals": [
+		{
+			"mac": "70:4d:7b:64:3b:dd",
+			"hostname": "(Static IP)",
+			"status": "REACHABLE",
+			"session_time_sec": 20,
+			"dev": "br-lan",
+			"ip": "192.168.16.120"
+		},
+		{
+			"mac": "00:0c:29:7d:06:55",
+			"hostname": "kay-vm",
+			"status": "REACHABLE",
+			"session_time_sec": 20,
+			"dev": "br-lan",
+			"ip": "192.168.16.118"
+		}
+	],
+	"count": 2
+}
+
+```
+
+
+---
+
 ## 依赖说明 (Dependencies)
 
 本项目依赖以下 OpenWrt 基础组件（编译或通过 opkg 安装时系统会自动拉取与集成）：
