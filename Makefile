@@ -39,8 +39,8 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/share/luci/menu.d
 	$(INSTALL_DATA) ./root/usr/share/luci/menu.d/luci-app-session-tracker.json $(1)/usr/share/luci/menu.d/luci-app-session-tracker.json
 
-	$(INSTALL_DIR) $(1)/usr/share/luci-static/resources/view/status
-	$(INSTALL_DATA) ./root/usr/share/luci-static/resources/view/status/session_tracker.js $(1)/usr/share/luci-static/resources/view/status/session_tracker.js
+	$(INSTALL_DIR) $(1)/www/luci-static/resources/view/status
+	$(INSTALL_DATA) ./root/usr/share/luci-static/resources/view/status/session_tracker.js $(1)/www/luci-static/resources/view/status/session_tracker.js
 
 	$(INSTALL_DIR) $(1)/usr/share/luci/i18n
 	$(INSTALL_DATA) ./root/usr/share/luci/i18n/session-tracker.zh-cn.json $(1)/usr/share/luci/i18n/session-tracker.zh-cn.json
