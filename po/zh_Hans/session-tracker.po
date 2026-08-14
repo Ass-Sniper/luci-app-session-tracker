@@ -1,0 +1,60 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: zh_Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Terminal Sessions"
+msgstr "终端会话"
+
+msgid "Active Terminal Sessions"
+msgstr "活跃终端会话"
+
+msgid "Real-time tracking of online LAN terminals and session duration."
+msgstr "实时追踪局域网在线终端及会话时长。"
+
+msgid "IP Address"
+msgstr "IP 地址"
+
+msgid "MAC Address"
+msgstr "MAC 地址"
+
+msgid "Hostname"
+msgstr "主机名"
+
+msgid "Interface"
+msgstr "接口"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Online Duration"
+msgstr "在线时长"
+
+msgid "Active"
+msgstr "活跃"
+
+msgid "Stale (Grace)"
+msgstr "暂时离线（宽限期）"
+
+msgid "Unknown"
+msgstr "未知"
+
+msgid "(Static IP)"
+msgstr "（静态 IP）"
+
+msgid "No active terminals found."
+msgstr "未发现活跃终端。"
+
+msgid "%d d"
+msgstr "%d 天"
+
+msgid "%d h"
+msgstr "%d 小时"
+
+msgid "%d min"
+msgstr "%d 分钟"
+
+msgid "%d s"
+msgstr "%d 秒"
