@@ -7,7 +7,7 @@ PKG_LICENSE:=MIT
 LUCI_TITLE:=LuCI Support for Native Session Tracker
 LUCI_DEPENDS:=+lua +libubox-lua +libubus-lua +luci-lib-nixio
 LUCI_PKGARCH:=all
-LUCI_MAINTAINER:=Kay <kay@example.com>
+LUCI_MAINTAINER:=Ass-Sniper <zoukaiass@gmail.com>
 
 include $(TOPDIR)/feeds/luci/luci.mk
 
