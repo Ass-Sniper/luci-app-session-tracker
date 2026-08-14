@@ -1,0 +1,13 @@
+{
+	"admin/status/session_tracker": {
+		"title": "Terminal Sessions",
+		"order": 50,
+		"action": {
+			"type": "view",
+			"path": "status/session_tracker"
+		},
+		"depends": {
+			"acl": [ "luci-app-session-tracker" ]
+		}
+	}
+}

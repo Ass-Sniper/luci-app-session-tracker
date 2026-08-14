@@ -1,0 +1,10 @@
+{
+	"luci-app-session-tracker": {
+		"description": "Grant read access to session.tracker ubus service",
+		"read": {
+			"ubus": {
+				"session.tracker": [ "get_terminals" ]
+			}
+		}
+	}
+}
