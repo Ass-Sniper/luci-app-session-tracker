@@ -42,6 +42,15 @@ src-git session_tracker [https://github.com/Ass-Sniper/luci-app-session-tracker.
 make menuconfig # 选中 luci-app-session-tracker 后编译
 ```
 
+## 依赖说明 (Dependencies)
+
+本项目依赖以下 OpenWrt 基础组件（编译或通过 opkg 安装时系统会自动拉取与集成）：
+* `lua`
+* `libubox-lua`
+* `lua-ubus`
+* `nixio`
+* `luci-base`
+
 ## License
 
 [MIT](LICENSE) © Ass-Sniper
