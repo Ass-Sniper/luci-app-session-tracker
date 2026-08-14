@@ -14,7 +14,7 @@ define Package/$(PKG_NAME)
   CATEGORY:=LuCI
   SUBMENU:=3. Applications
   TITLE:=LuCI Support for Native Session Tracker
-  DEPENDS:=+lua +libubox-lua +lua-ubus +nixio +luci-base
+  DEPENDS:=+lua +libubox-lua +libubus-lua +luci-lib-nixio +luci-base
   PKGARCH:=all
 endef
 
